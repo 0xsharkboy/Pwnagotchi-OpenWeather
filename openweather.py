@@ -12,17 +12,23 @@ class OpenWeather(plugins.Plugin):
         self.options = dict()
         self.api_key = None
         self.city = None
+        self.unit = None
 
     def _check_options(self):
         if 'api_key' not in self.options:
             self.options["api_key"] = ""
         if 'city' not in self.options:
             self.options["city"] = ""
+        if 'unit' not in self.options:
+            self.options["unit"] = "metric"
+        if self.options["unit"] is not ('metric' or 'imperial' or 'standard'):
+            self.options["unit"] = "metric"
 
     def on_loaded(self):
         self._check_options()
         self.api_key = self.options["api_key"]
         self.city = self.options["city"]
+        self.unit = self.options["unit"]
 
         if self.api_key:
             logging.info('[openweather] plugin loaded.')
