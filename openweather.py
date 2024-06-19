@@ -11,14 +11,18 @@ class OpenWeather(plugins.Plugin):
     def __init__(self):
         self.options = dict()
         self.api_key = None
+        self.city = None
 
     def _check_options(self):
         if 'api_key' not in self.options:
             self.options["api_key"] = ""
+        if 'city' not in self.options:
+            self.options["city"] = ""
 
     def on_loaded(self):
         self._check_options()
         self.api_key = self.options["api_key"]
+        self.city = self.options["city"]
 
         if self.api_key:
             logging.info('[openweather] plugin loaded.')
