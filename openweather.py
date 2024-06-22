@@ -14,6 +14,7 @@ class OpenWeather(plugins.Plugin):
         self.api_key = None
         self.city = None
         self.unit = None
+        self.temp = None
         self.coordinates = None
 
     def _check_options(self):
@@ -51,3 +52,11 @@ class OpenWeather(plugins.Plugin):
             logging.info('[openweather] plugin loaded.')
         else:
             logging.warning('[openweather] plugin loaded but no api key specified! Plugin will not work')
+
+    def on_handshake(self, agent, filename, access_point, client_station):
+        info = agent.session()
+        self.coordinates = info["gps"]
+
+        self.temp = self._get_weather()
+
+        logging.info(f'[openweather] temp : {self.temp}')
